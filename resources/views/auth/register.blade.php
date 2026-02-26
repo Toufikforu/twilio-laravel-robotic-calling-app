@@ -17,7 +17,7 @@
     <!-- Question 1 -->
     <div class="mb-3">
         <label for="usage" class="form-label d-block text-start fw-bold">
-            1. So we can best serve the community, how will you use the Dyebold App? (Be specific)<span class="text-danger">*</span>
+            1. To better understand your needs, how do you plan to use the Robotic Calling System? (Be specific)<span class="text-danger">*</span>
         </label>
         <textarea id="usage" class="form-control" name="usage" minlength="10" maxlength="100" placeholder="Min 10 characters & Max 100" style="height: 80px;" required>{{ old('usage') }}</textarea>
         <div class="text-danger" id="error-usage">{{ $errors->first('usage') }}</div>
@@ -26,19 +26,18 @@
     <!-- Question 2 -->
     <div class="mb-3 text-start">
         <label class="form-label d-block fw-bold">
-            2. Which Dye Training have you taken?<span class="text-danger">*</span>
+            2. What experience do you have with automated calling, SMS broadcasting, or similar communication platforms?<span class="text-danger">*</span>
         </label>
-        @php
-            $trainings = [
-                'IICRC Carpet Dyeing' => 'iicrc',
-                'DyeBold Nylon Carpet Dyeing' => 'nylon',
-                'Dyebold Polyester Carpet Dyeing' => 'polyester',
-                'Dyebold Rug Dyeing' => 'rug',
-                'Colorful Carpets' => 'colorful',
-                'None but would love to!' => 'none',
-            ];
-        @endphp
-
+            @php
+                $trainings = [
+                    'Automated Voice Broadcasting Systems' => 'voice_broadcast',
+                    'Predictive Dialer Systems' => 'predictive_dialer',
+                    'CRM Integrated Calling Tools' => 'crm_calling',
+                    'VoIP Phone Systems' => 'voip',
+                    'Political / Campaign Calling Platforms' => 'campaign',
+                    'None but I would like to learn' => 'none',
+                ];
+            @endphp
         @foreach ($trainings as $label => $id)
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="training[]" id="{{ $id }}" value="{{ $label }}"
@@ -52,7 +51,7 @@
     <!-- Question 3 -->
     <div class="mb-3">
         <label for="dyes" class="form-label d-block text-start fw-bold">
-            3. Which dyes do you currently use?<span class="text-danger">*</span>
+            3. What calling platforms or communication tools are you currently using?<span class="text-danger">*</span>
         </label>
         <input type="text" id="dyes" name="dyes" class="form-control" minlength="2" maxlength="15"
                placeholder="Min 2 & Max 15 characters" style="height: 40px;" required
