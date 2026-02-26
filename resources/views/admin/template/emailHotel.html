@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Carpet Dyeing Services for Hotels</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+                color: #333;
+            }
+            .container {
+                width: 100%;
+                max-width: 600px;
+                margin: auto;
+                background-color: #ffffff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+            .header {
+                background-color: #000000;
+                color: #ffd700; /* Golden color */
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 20px;
+            }
+            .header img {
+                width: 100px; /* Adjust the logo size as needed */
+            }
+            .header .contact {
+                text-align: right;
+            }
+            .contact p {
+                margin: 0;
+            }
+            .content {
+                margin: 20px 0;
+            }
+            .before-after {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .before-after img {
+                width: 48%; /* Adjust the width as needed */
+                margin-bottom: 10px;
+            }
+            .video-container {
+                display: flex;
+                justify-content: space-between;
+                margin: 20px 0;
+            }
+            a {
+                text-decoration: none;
+            }
+            h1 {
+                color: #d0ac66;
+            }
+            .video-container video {
+                width: 48%; /* Adjust the width as needed */
+                height: auto;
+            }
+            .offer-text {
+                background-color: #ffd700; /* Golden color */
+                padding: 15px;
+                border-radius: 5px;
+                text-align: center;
+                width: 100%;
+                max-width: 568px;
+                margin: 0 auto;
+            }
+
+            .offer-message {
+                font-size: 24px;
+                font-weight: bold;
+                color: #000; /* Black text color */
+            }
+
+            .offer-contact {
+                font-size: 20px;
+                color: #000; /* Black text color */
+            }
+
+            .offer-contact h2 {
+                margin: 5px 0 0;
+                font-size: 24px;
+                color: #000; /* Black text color */
+            }
+
+            .footer {
+                background-color: #000000;
+                color: #ffffff;
+                text-align: center;
+                margin-top: 20px;
+                padding: 20px;
+            }
+            .footer .social-icons a {
+                margin: 0 10px;
+                text-decoration: none;
+                color: #ffd700; /* Golden color */
+            }
+            .offer-button {
+                display: inline-block;
+                background-color: #ffd700; /* Golden color */
+                color: #000000;
+                padding: 10px 15px;
+                border-radius: 5px;
+                text-decoration: none;
+                margin-top: 10px;
+            }
+            .copyright {
+                font-size: 0.5rem;
+            }
+            .email {
+                color: #fff;
+                font-size: 16px;
+            }
+
+            .contact a {
+                color: #fff;
+                font-size: 16px;
+            }
+            .offer-contact {
+                flex: 1;
+                padding: 10px;
+                text-align: right;
+            }
+            .offer-text .row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .number {
+                margin: 5px 0;
+                font-size: 18px;
+                color: #333;
+            }
+            .free-consultation {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #333;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 4px;
+                text-transform: uppercase;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <img
+                    src="{{asset('admin/images/dyebold-logo.png')}}"
+                    alt="Dyebold Logo"
+                />
+                <div class="contact">
+                    <p>
+                        Phone:
+                        <a href="tel:+18133204000" style="color: #ffd700"
+                            >+1 (813) 320 4000</a
+                        >
+                    </p>
+                </div>
+            </div>
+
+            <div class="content">
+                <h1>Transform Your Rugs and Carpets!</h1>
+                <p>Dear Hotel Manager,</p>
+                <p>
+                    We are excited to offer our professional carpet and rug
+                    dyeing services tailored specifically for hotels. With over
+                    20 years of experience, our expert colorist, Issa, will
+                    ensure that your rugs and carpets look vibrant and renewed.
+                </p>
+                <p>Check out our before and after examples below:</p>
+                <div class="before-after">
+                    <img
+                        src="{{asset('admin/images/1.jpg')}}"
+                        alt="Before Image"
+                    />
+                    <img
+                        src="{{asset('admin/images/2.jpg')}}"
+                        alt="After Image"
+                    />
+                </div>
+                <h2>Watch Our Process</h2>
+                <div class="offer-text">
+                    <div class="row">
+                        <div
+                            class="col-md-3 offer-message"
+                            style="flex: 1; padding: 10px"
+                        >
+                            Call Now
+                            <h3 class="number">+1 (813) 320 4000</h3>
+                        </div>
+                        <div class="col-md-3 offer-contact">
+                            <a
+                                href="https://dyebold.com/hotel/"
+                                class="free-consultation"
+                                >Free consultation</a
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>Visit our website for more information:</p>
+                <p>
+                    <a href="https://dyebold.com" class="offer-button"
+                        >Our Services</a
+                    >
+                </p>
+                <div class="social-icons">
+                    <a href="http://facebook.com/dyebold" target="_blank"
+                        >Facebook</a
+                    >
+                    |
+                    <a href="http://twitter.com/dyebold" target="_blank"
+                        >Twitter</a
+                    >
+                </div>
+                <p class="copyright">
+                    &copy; 2024 Your Business Name. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

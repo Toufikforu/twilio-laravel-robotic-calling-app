@@ -1,0 +1,176 @@
+/* Brand Text color */
+.brand-text,
+.rtd-icon,
+.sidebar-header {
+    color: #da1d4f;
+}
+
+/* Brand Background Color  */
+.brand-bg,
+.rtd-footer,
+.rtd-header {
+    background-color: #da1d4f !important;
+}
+
+.rtd-btn {
+    border: 1px solid #da1d4f;
+    background-color: #da1d4f !important;
+}
+
+.sidebar-nav {
+    border-top: 1px solid #da1d4f;
+}
+
+.sidebar-item.active .sidebar-link:hover,
+.sidebar-item.active > .sidebar-link {
+    background: linear-gradient(
+        90deg,
+        rgb(184, 27, 51),
+        rgba(226, 148, 3, 0.088) 50%,
+        transparent
+    );
+    border-left-color: #da1d4f;
+    color: #e9ecef;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.hamburger,
+.hamburger:after,
+.hamburger:before {
+    background: #da1d4f !important;
+}
+.sidebar-link,
+a.sidebar-link,
+.navbar-bg,
+.footer-copyright {
+    background: #212529 !important;
+}
+
+#main {
+    background-color: #da1d4f;
+    background-image: url("/assets/images/bg-main.jpg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+/* Register page Labels Font weight  */
+label {
+    display: inline-block;
+    font-weight: 700;
+}
+
+label.form-check-label {
+    font-weight: 400;
+}
+
+.rtd-footer,
+.rtd-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125) !important;
+    color: #fff;
+    font-size: 22px;
+    text-align: center;
+    font-weight: 900;
+}
+
+.rtd-btn-footer {
+    color: #fff !important;
+}
+
+#rtd-btn-login,
+#rtd-btn-reg {
+    padding: 15px 40px;
+}
+
+.rtd-icon {
+    padding-right: 10px;
+    font-size: 24px;
+}
+
+.footer-bg {
+    background: #212529;
+    color: #fff;
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    min-height: 100vh;
+}
+
+body {
+    font-family: sans-serif, auto;
+}
+
+a.btn:hover {
+    background-color: #f86004;
+    border: 1px solid #f86004;
+}
+
+/* Start Marquee text */
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+.marquee-text {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+    animation: bounce 4s linear infinite alternate;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(50%);
+    }
+}
+
+/* End Marquee text */
+
+#plan-item a:hover {
+    background-color: #f86004;
+    border-color: #f86004;
+    color: #000;
+}
+
+p.plan-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    padding-top: 5px;
+}
+div#plan-item {
+    padding: 5px;
+}
+
+/* User Dashboard Style */
+ul#quick-tabs {
+    list-style: none;
+}
+
+ul#quick-tabs li a {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+/* Help & Support Page */
+#help i.fa.fa-phone {
+    font-size: 28px;
+    color: #f86004;
+    margin-right: 10px;
+    margin-left: 10px;
+}

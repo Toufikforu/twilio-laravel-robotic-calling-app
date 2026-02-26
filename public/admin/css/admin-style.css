@@ -1,0 +1,9 @@
+span.Active {
+    color: green;
+}
+span.inActive {
+    color: #ff0000;
+}
+div#userStatus span {
+    font-weight: 700;
+}

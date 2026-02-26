@@ -1,0 +1,22 @@
+
+
+=================== Reset table data ==========
+php artisan tinker
+
+call_leads::query()->update([
+    'status' => 'pending',
+    'campaign_id' => null
+]);
+
+or
+
+\App\Models\CallLead::query()->update([
+    'status' => 'pending',
+    'campaign_id' => null
+]);
+
+
+================================
+1. Pagination
+2. Plus +1 add
+3. Duplicate number
