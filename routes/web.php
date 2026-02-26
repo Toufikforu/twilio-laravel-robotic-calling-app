@@ -27,7 +27,7 @@ use App\Http\Controllers\TwilioController;
 
 
 Route::get('/', function () {
-    return redirect('/login');
+    return view('mainpage');
 });
 
 
