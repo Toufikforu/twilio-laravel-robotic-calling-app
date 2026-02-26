@@ -1,29 +1,47 @@
-FROM php:8.2-cli
+FROM php:8.3-fpm-bookworm
 
-# System deps needed by common Laravel packages
-RUN apt-get update && apt-get install -y \
-    git unzip curl \
-    libpq-dev \
-    libzip-dev zip \
+# --- System deps + PHP extensions ---
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git unzip zip curl \
+    nginx supervisor \
+    libzip-dev \
     libicu-dev \
-    libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
-  && docker-php-ext-configure gd --with-freetype --with-jpeg \
-  && docker-php-ext-install pdo pdo_pgsql zip intl gd pcntl \
-  && rm -rf /var/lib/apt/lists/*
+    libpng-dev libjpeg-dev libfreetype6-dev \
+ && docker-php-ext-configure gd --with-freetype --with-jpeg \
+ && docker-php-ext-install -j$(nproc) \
+    pdo pdo_pgsql \
+    mbstring \
+    intl \
+    zip \
+    gd \
+    bcmath \
+    opcache \
+ && rm -rf /var/lib/apt/lists/*
 
-# Composer
+# --- Composer ---
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /app
+WORKDIR /var/www/html
 
-# Copy only composer files first (better caching)
-COPY composer.json composer.lock* ./
+# Copy composer files first for caching
+COPY composer.json composer.lock ./
 
-ENV COMPOSER_ALLOW_SUPERUSER=1
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+# Sanity check: ensure required extensions exist before composer
+RUN php -m | egrep -i "bcmath|pdo_pgsql" \
+ && composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
-# Copy the rest of the app
+# Copy application source
 COPY . .
 
-EXPOSE 10000
-CMD php artisan serve --host=0.0.0.0 --port=10000
+# Permissions for Laravel
+RUN chown -R www-data:www-data storage bootstrap/cache
+
+# Nginx + Supervisor configs
+COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY docker/site.conf /etc/nginx/conf.d/default.conf
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+EXPOSE 8080
+ENV PORT=8080
+
+CMD ["/usr/bin/supervisord", "-n"]
