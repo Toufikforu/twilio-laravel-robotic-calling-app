@@ -11,6 +11,7 @@ use App\Http\Controllers\ScriptController;
 use App\Http\Controllers\CallLeadUploadController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\TwilioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,4 +127,4 @@ Route::middleware('auth','is_Admin')->group(function () {
 
 
 });
-
+Route::match(['get','post'], '/twilio/voice', [TwilioController::class, 'voice']);

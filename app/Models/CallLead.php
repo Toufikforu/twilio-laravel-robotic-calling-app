@@ -13,4 +13,9 @@ class CallLead extends Model
     protected $casts = [
         'call_date' => 'datetime',
     ];
+
+    public function campaign()
+    {
+        return $this->belongsTo(Campaign::class);
+    }
 }
