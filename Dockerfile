@@ -1,3 +1,15 @@
+# ---------- Node build stage ----------
+FROM node:20-bookworm AS nodebuild
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+RUN npm run build
+
+
+# ---------- PHP runtime stage ----------
 FROM php:8.3-cli-bookworm
 
 RUN set -eux; \
@@ -18,22 +30,17 @@ COPY . .
 
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
-# Create writable dirs (still do this at build time)
-RUN mkdir -p \
-      storage/logs \
-      storage/framework/cache \
-      storage/framework/sessions \
-      storage/framework/views \
-      bootstrap/cache
+# ✅ Copy built Vite assets (includes public/build/manifest.json)
+COPY --from=nodebuild /app/public/build /app/public/build
 
-# Copy an entrypoint that fixes perms at runtime + runs migrations
+# Create writable dirs
+RUN mkdir -p storage/logs storage/framework/{cache,sessions,views} bootstrap/cache
+
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 USER www-data
 
-# Render provides $PORT at runtime; EXPOSE is informational only
 EXPOSE 10000
-
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=${PORT:-10000}"]
+CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
