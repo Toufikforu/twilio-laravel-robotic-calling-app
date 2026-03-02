@@ -26,21 +26,33 @@ RUN set -eux; \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
+
+# Copy app source
 COPY . .
 
+# Install PHP dependencies (production)
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
-# ✅ Copy built Vite assets (includes public/build/manifest.json)
+# Copy built Vite assets (includes public/build/manifest.json)
 COPY --from=nodebuild /app/public/build /app/public/build
 
-# Create writable dirs
-RUN mkdir -p storage/logs storage/framework/{cache,sessions,views} bootstrap/cache
+# Ensure Laravel writable dirs exist
+RUN mkdir -p \
+    /app/storage/logs \
+    /app/storage/framework/cache \
+    /app/storage/framework/sessions \
+    /app/storage/framework/views \
+    /app/bootstrap/cache
 
+# Set ownership & permissions at build time (runtime will also re-apply)
+RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache \
+ && chmod -R 775 /app/storage /app/bootstrap/cache
+
+# Entrypoint (runs as root, fixes perms, then drops to www-data)
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-USER www-data
-
 EXPOSE 10000
+
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
