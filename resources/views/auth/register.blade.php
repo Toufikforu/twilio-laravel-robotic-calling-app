@@ -101,7 +101,7 @@
         <div class="text-danger" id="error-password_confirmation"></div>
     </div>
 
-    <button type="submit" class="btn btn-primary rtd-btn-footer px-5">Register</button>
+    <button type="submit" class="btn rtd-btn rtd-btn-footer px-5">Register</button>
 </form>
 
                 </div>
@@ -115,7 +115,7 @@
     <ul class="navbar-nav mr-auto">
          
             <li class="nav-item">
-                <a class="btn btn-primary rtd-btn-footer" href="{{ route('login') }}">{{ __('Back to Login') }}</a>
+                <a class="btn rtd-btn rtd-btn-footer border" href="{{ route('login') }}">{{ __('Back to Login') }}</a>
             </li>
     </ul>
 </div>

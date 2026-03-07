@@ -10,74 +10,145 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 
-    <style>
-        body { background-color: #f8f9fa; }
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
 
+    .hero {
+        position: relative;
+        text-align: center;
+        padding: 120px 20px;
+        min-height: 420px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-image: url("{{ asset('user/img/header.jpg') }}");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        color: white;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 1;
+    }
+
+    .hero > * {
+        position: relative;
+        z-index: 2;
+    }
+
+    .video-section {
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .info-section {
+        position: relative;
+        padding: 80px 20px;
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-image: url("{{ asset('user/img/footer.jpg') }}");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        color: #fff;
+        overflow: hidden;
+    }
+
+    .info-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 1;
+    }
+
+    .info-section > * {
+        position: relative;
+        z-index: 2;
+    }
+
+    .btn-custom {
+        width: 150px;
+        margin: 10px;
+    }
+
+    .dyebold-color {
+        background-color: #da1d4f !important;
+        border: 1px solid #da1d4f;
+    }
+
+    .result-box {
+        width: 100%;
+        height: 50px;
+        margin: 20px 0px;
+        border: 1px solid #ccc;
+    }
+
+    #image-area,
+    #rang-area i {
+        display: none;
+    }
+
+    .card-header,
+    #nonebox,
+    .btn-upload {
+        display: none;
+    }
+
+    .modal-content {
+        background-color: #000;
+    }
+
+    .form-label,
+    label.col-md-4.col-form-label {
+        font-weight: bold;
+        color: #ddc27a;
+    }
+
+    .form-check-label {
+        color: #fff;
+    }
+
+    .btn-check:focus + .btn-danger,
+    .btn-danger:focus {
+        color: #fff;
+        background-color: #bb2d3b;
+        border-color: #b02a37;
+        box-shadow: 0 0 0 .25rem rgba(225, 83, 97, .5);
+    }
+
+    .modal-header .btn-close {
+        filter: invert(1);
+        opacity: 1;
+    }
+
+    @media (max-width: 768px) {
         .hero {
-            position: relative;
-            text-align: center;
-            padding: 60px 20px;
-            /* Use your own background image if you want */
-            background: url("{{ asset('user/img/bg-main.jpg') }}") no-repeat center center fixed;
-            background-size: cover;
-            color: white;
+            min-height: 320px;
+            padding: 80px 15px;
+            background-position: center;
         }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.55);
-            z-index: 1;
-        }
-
-        .hero * { position: relative; z-index: 2; }
-
-        .video-section { text-align: center; padding: 40px 20px; }
 
         .info-section {
-            position: relative;
-            padding: 40px 20px;
-            text-align: center;
-            background: url("{{ asset('user/img/bg-main.jpg') }}") no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
+            min-height: 240px;
+            padding: 60px 15px;
+            background-position: center;
         }
-
-        .info-section::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 1;
-        }
-
-        .info-section * { position: relative; z-index: 2; }
-
-        .btn-custom { width: 150px; margin: 10px; }
-
-        .dyebold-color {
-            background-color: #570101 !important;
-            border: 1px solid #570101;
-        }
-
-        /* Hide unused UI from original template */
-        .result-box { width: 100%; height: 50px; margin: 20px 0px; border: 1px solid #ccc; }
-        #image-area, #rang-area i { display:none; }
-        .card-header, #nonebox, .btn-upload { display: none; }
-
-        /* ===== Register Model Pop up Style */
-        .modal-content { background-color: #000; }
-        .form-label, label.col-md-4.col-form-label { font-weight: bold; color: #ddc27a; }
-        .form-check-label { color: #fff; }
-        .btn-check:focus+.btn-danger, .btn-danger:focus {
-            color: #fff;
-            background-color: #bb2d3b;
-            border-color: #b02a37;
-            box-shadow: 0 0 0 .25rem rgba(225, 83, 97, .5);
-        }
-        .modal-header .btn-close { filter: invert(1); opacity: 1; }
-    </style>
+    }
+</style>
 </head>
 
 <body>
