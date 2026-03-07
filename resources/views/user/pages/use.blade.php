@@ -13,11 +13,11 @@
                 <div class="card-body">
                     <div class="row">
                         <ul class="list-group">
-                            <li class="list-group-item">1. <strong>Upload or Take a photo</strong> from left camera icon.</li>
-                            <li class="list-group-item">2. <strong>Select Target</strong> Color Box from bottom left.</li>
-                            <li class="list-group-item">3. Click Color <strong>Picker Icon</strong> at the top middle area.</li>
-                            <li class="list-group-item">4. <strong>Select Current</strong> and pick color again from image.</li>
-                            <li class="list-group-item">5. After pick color on TARGET & Current, you will get NEEDED <strong>automatically</strong>, which is your result.</li>
+                            <li class="list-group-item">1. <strong>Upload CSV file.</li>
+                            <li class="list-group-item">2. <strong>Create Script</li>
+                            <li class="list-group-item">3. Create Campaign.</li>
+                            <li class="list-group-item">4. Click Start from Campaign Action section to start.</li>
+                            <li class="list-group-item">5. Stop campaign</li>
                         </ul>
                     </div>
                 </div>
