@@ -8,7 +8,16 @@ class CallLead extends Model
 {
     protected $table = 'call_leads';
 
-    protected $fillable = ['first_name','last_name','phone','status','call_date'];
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'phone',
+        'status',
+        'call_date',
+        'campaign_id',
+        'call_sid',
+        'duration',
+    ];
 
     protected $casts = [
         'call_date' => 'datetime',
