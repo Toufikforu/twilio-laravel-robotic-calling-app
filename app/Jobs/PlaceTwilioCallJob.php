@@ -58,9 +58,11 @@ class PlaceTwilioCallJob implements ShouldQueue
                 [
                     'url' => secure_url('/twilio/voice?lead_id=' . $lead->id),
                     'method' => 'POST',
+
                     'statusCallback' => secure_url('/twilio/status-callback?lead_id=' . $lead->id),
                     'statusCallbackMethod' => 'POST',
-                    'statusCallbackEvent' => ['initiated', 'ringing', 'answered', 'completed'],
+
+                    'statusCallbackEvent' => ['initiated','ringing','answered','completed']
                 ]
             );
 
