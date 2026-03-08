@@ -65,15 +65,14 @@ class UserController extends Controller
         return view('user.pages.campaigns');
     }
 
-    public function calllogs()
+   public function calllogs()
     {
         $logs = CallLead::with('campaign')
-        ->orderByDesc('call_date')
-        ->limit(200)
-        ->get();
+            ->orderByDesc('updated_at')   // better ordering
+            ->limit(200)
+            ->get();
 
         return view('user.pages.calllogs', compact('logs'));
-    
     }
 
     public function use()
