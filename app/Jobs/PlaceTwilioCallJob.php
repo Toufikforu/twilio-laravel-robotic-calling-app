@@ -52,17 +52,15 @@ class PlaceTwilioCallJob implements ShouldQueue
                 $phone = '+' . $phone;
             }
 
-            $call = $twilio->calls->create(
+           $call = $twilio->calls->create(
                 $phone,
                 config('services.twilio.from'),
                 [
-                    'url' => secure_url('/twilio/voice?lead_id=' . $lead->id),
+                    'url' => rtrim(config('app.url'), '/') . '/twilio/voice?lead_id=' . $lead->id,
                     'method' => 'POST',
-
-                    'statusCallback' => secure_url('/twilio/status-callback?lead_id=' . $lead->id),
+                    'statusCallback' => rtrim(config('app.url'), '/') . '/twilio/status-callback?lead_id=' . $lead->id,
                     'statusCallbackMethod' => 'POST',
-
-                    'statusCallbackEvent' => ['initiated','ringing','answered','completed']
+                    'statusCallbackEvent' => ['initiated', 'ringing', 'answered', 'completed'],
                 ]
             );
 
