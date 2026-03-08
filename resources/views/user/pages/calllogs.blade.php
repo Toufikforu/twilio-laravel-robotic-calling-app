@@ -105,4 +105,11 @@
   </div>
 </div>
 
+<!-- Refresh page every 5 scounds  -->
+<script>
+setInterval(function() {
+    window.location.reload();
+}, 5000); // refresh every 5 seconds
+</script>
+
 @endsection
