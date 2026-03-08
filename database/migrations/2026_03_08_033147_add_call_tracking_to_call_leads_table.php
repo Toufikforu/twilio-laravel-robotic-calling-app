@@ -6,23 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up()
+    public function up(): void
     {
-        Schema::table('call_leads', function ($table) {
-            $table->integer('duration')->nullable();
+        Schema::table('call_leads', function (Blueprint $table) {
+            $table->string('call_sid')->nullable()->after('status');
+            $table->integer('duration')->nullable()->after('call_sid');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('call_leads', function (Blueprint $table) {
-            //
+            $table->dropColumn(['call_sid', 'duration']);
         });
     }
 };

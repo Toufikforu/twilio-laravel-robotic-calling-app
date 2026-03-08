@@ -9,23 +9,17 @@ use Illuminate\Support\Facades\Log;
 
 class TwilioController extends Controller
 {
-
-
     public function voice(Request $request)
     {
-        $lead = CallLead::with('campaign.script')
-            ->find($request->lead_id);
+        $lead = CallLead::with('campaign.script')->find($request->lead_id);
 
         $response = new VoiceResponse();
 
-        if (!$lead || !$lead->campaign || !$lead->campaign->script) {
-            $response->say("No script found.", ['voice' => 'alice']);
+        if (! $lead || ! $lead->campaign || ! $lead->campaign->script) {
+            $response->say('No script found.', ['voice' => 'alice']);
         } else {
-
-            // Get script content from database
             $scriptText = $lead->campaign->script->content;
 
-            // Optional: replace placeholders
             $scriptText = str_replace(
                 ['{first_name}', '{last_name}'],
                 [$lead->first_name, $lead->last_name],
@@ -35,27 +29,38 @@ class TwilioController extends Controller
             $response->say($scriptText, ['voice' => 'alice']);
         }
 
-        return response($response, 200)
-            ->header('Content-Type', 'text/xml');
+        return response($response, 200)->header('Content-Type', 'text/xml');
     }
 
     public function statusCallback(Request $request)
     {
-        \Log::info('Twilio status callback received', $request->all());
+        Log::info('Twilio status callback received', [
+            'lead_id' => $request->query('lead_id'),
+            'call_sid' => $request->input('CallSid'),
+            'call_status' => $request->input('CallStatus'),
+            'duration' => $request->input('CallDuration'),
+        ]);
 
         $leadId = $request->query('lead_id');
-        $callStatus = $request->input('CallStatus');
 
-        if ($leadId) {
-            $lead = CallLead::find($leadId);
-
-            if ($lead) {
-                $lead->update([
-                    'status' => $callStatus,
-                    'call_date' => now(),
-                ]);
-            }
+        if (! $leadId) {
+            return response('Missing lead_id', 200);
         }
+
+        $lead = CallLead::find($leadId);
+
+        if (! $lead) {
+            return response('Lead not found', 200);
+        }
+
+        $lead->update([
+            'status' => $request->input('CallStatus'),
+            'call_sid' => $request->input('CallSid'),
+            'duration' => $request->filled('CallDuration')
+                ? (int) $request->input('CallDuration')
+                : null,
+            'call_date' => now(),
+        ]);
 
         return response('OK', 200);
     }

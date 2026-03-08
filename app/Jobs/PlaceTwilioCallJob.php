@@ -30,7 +30,6 @@ class PlaceTwilioCallJob implements ShouldQueue
             return;
         }
 
-        // Stop protection
         if ($lead->campaign && $lead->campaign->status !== 'running') {
             return;
         }
@@ -53,7 +52,7 @@ class PlaceTwilioCallJob implements ShouldQueue
                 $phone = '+' . $phone;
             }
 
-            $twilio->calls->create(
+            $call = $twilio->calls->create(
                 $phone,
                 config('services.twilio.from'),
                 [
@@ -68,6 +67,7 @@ class PlaceTwilioCallJob implements ShouldQueue
             $lead->update([
                 'phone' => $phone,
                 'status' => 'calling',
+                'call_sid' => $call->sid,
                 'call_date' => now(),
             ]);
         } catch (\Exception $e) {
