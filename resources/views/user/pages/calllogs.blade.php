@@ -46,13 +46,35 @@
                       <td>{{ $log->campaign->name ?? '-' }}</td>
 
                       <td>
-                          <span class="badge bg-primary">
-                              {{ ucfirst($log->status ?? 'pending') }}
-                          </span>
-                      </td>
+                        @if($log->status === 'completed')
+                            <span class="badge bg-success">Completed</span>
+                        @elseif($log->status === 'busy')
+                            <span class="badge bg-warning text-dark">Busy</span>
+                        @elseif($log->status === 'failed')
+                            <span class="badge bg-danger">Failed</span>
+                        @elseif($log->status === 'no-answer')
+                            <span class="badge bg-warning text-dark">No Answer</span>
+                        @elseif($log->status === 'answered')
+                            <span class="badge bg-info text-dark">Answered</span>
+                        @elseif($log->status === 'ringing')
+                            <span class="badge bg-primary">Ringing</span>
+                        @elseif($log->status === 'initiated')
+                            <span class="badge bg-secondary">Initiated</span>
+                        @elseif($log->status === 'in-progress')
+                            <span class="badge bg-primary">In Progress</span>
+                        @elseif($log->status === 'calling')
+                            <span class="badge bg-primary">Calling</span>
+                        @else
+                            <span class="badge bg-secondary">{{ ucfirst($log->status ?? 'unknown') }}</span>
+                        @endif
+                     </td>
 
                       <td>
-                          {{ $log->duration ?? '--' }}
+                          @if(!is_null($log->duration))
+                              {{ gmdate('i:s', (int) $log->duration) }}
+                          @else
+                              --
+                          @endif
                       </td>
 
                       <td>

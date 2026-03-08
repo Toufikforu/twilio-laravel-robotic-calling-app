@@ -32,36 +32,39 @@ class TwilioController extends Controller
         return response($response, 200)->header('Content-Type', 'text/xml');
     }
 
-    public function statusCallback(Request $request)
-    {
-        Log::info('Twilio status callback received', [
-            'lead_id' => $request->query('lead_id'),
-            'call_sid' => $request->input('CallSid'),
-            'call_status' => $request->input('CallStatus'),
-            'duration' => $request->input('CallDuration'),
-        ]);
+public function statusCallback(Request $request)
+{
+    Log::info('Twilio status callback received', [
+        'lead_id' => $request->query('lead_id'),
+        'call_sid' => $request->input('CallSid'),
+        'call_status' => $request->input('CallStatus'),
+        'call_duration' => $request->input('CallDuration'),
+    ]);
 
-        $leadId = $request->query('lead_id');
+    $leadId = $request->query('lead_id');
 
-        if (! $leadId) {
-            return response('Missing lead_id', 200);
-        }
-
-        $lead = CallLead::find($leadId);
-
-        if (! $lead) {
-            return response('Lead not found', 200);
-        }
-
-        $lead->update([
-            'status' => $request->input('CallStatus'),
-            'call_sid' => $request->input('CallSid'),
-            'duration' => $request->filled('CallDuration')
-                ? (int) $request->input('CallDuration')
-                : null,
-            'call_date' => now(),
-        ]);
-
-        return response('OK', 200);
+    if (! $leadId) {
+        return response('Missing lead_id', 200);
     }
+
+    $lead = CallLead::find($leadId);
+
+    if (! $lead) {
+        return response('Lead not found', 200);
+    }
+
+    $updateData = [
+        'status' => $request->input('CallStatus'),
+        'call_sid' => $request->input('CallSid'),
+        'call_date' => now(),
+    ];
+
+    if ($request->filled('CallDuration')) {
+        $updateData['duration'] = (int) $request->input('CallDuration');
+    }
+
+    $lead->update($updateData);
+
+    return response('OK', 200);
+}
 }
