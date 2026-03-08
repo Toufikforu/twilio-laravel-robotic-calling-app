@@ -8,8 +8,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Twilio\Rest\Client;
-
 
 class PlaceTwilioCallJob implements ShouldQueue
 {
@@ -22,36 +22,11 @@ class PlaceTwilioCallJob implements ShouldQueue
         $this->leadId = $leadId;
     }
 
-    /* Handle for test mode 
-    public function handle(): void
-    {
-        \Log::info("Job running for Lead ID: " . $this->leadId);
-
-        $lead = CallLead::find($this->leadId);
-
-        if (!$lead) {
-            \Log::info("Lead not found.");
-            return;
-        }
-
-        // 🔥 TEST ONLY — no Twilio yet
-        $lead->update([
-            'status' => 'completed',
-            'call_date' => now(),
-        ]);
-
-        \Log::info("Lead marked completed: " . $this->leadId);
-    }
-
-    */
-
-
-
     public function handle(): void
     {
         $lead = CallLead::find($this->leadId);
 
-        if (!$lead) {
+        if (! $lead) {
             return;
         }
 
@@ -66,20 +41,41 @@ class PlaceTwilioCallJob implements ShouldQueue
                 config('services.twilio.token')
             );
 
-            $call = $twilio->calls->create(
-                $lead->phone,
+            $phone = preg_replace('/\D+/', '', $lead->phone);
+
+            if (strlen($phone) === 10) {
+                $phone = '+1' . $phone;
+            } elseif (strlen($phone) === 11 && str_starts_with($phone, '1')) {
+                $phone = '+' . $phone;
+            } elseif (str_starts_with($lead->phone, '+')) {
+                $phone = $lead->phone;
+            } else {
+                $phone = '+' . $phone;
+            }
+
+            $twilio->calls->create(
+                $phone,
                 config('services.twilio.from'),
                 [
-                    'url' => config('app.url') . '/twilio/voice?lead_id=' . $lead->id
+                    'url' => secure_url('/twilio/voice?lead_id=' . $lead->id),
+                    'method' => 'POST',
+                    'statusCallback' => secure_url('/twilio/status-callback?lead_id=' . $lead->id),
+                    'statusCallbackMethod' => 'POST',
+                    'statusCallbackEvent' => ['initiated', 'ringing', 'answered', 'completed'],
                 ]
             );
 
             $lead->update([
+                'phone' => $phone,
                 'status' => 'calling',
                 'call_date' => now(),
             ]);
-
         } catch (\Exception $e) {
+            Log::error('Twilio call failed', [
+                'lead_id' => $this->leadId,
+                'error' => $e->getMessage(),
+            ]);
+
             $lead->update([
                 'status' => 'failed',
             ]);

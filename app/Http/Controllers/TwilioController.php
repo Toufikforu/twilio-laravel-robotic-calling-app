@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Twilio\TwiML\VoiceResponse;
 use App\Models\CallLead;
+use Illuminate\Support\Facades\Log;
 
 class TwilioController extends Controller
 {
@@ -36,5 +37,26 @@ class TwilioController extends Controller
 
         return response($response, 200)
             ->header('Content-Type', 'text/xml');
+    }
+
+    public function statusCallback(Request $request)
+    {
+        \Log::info('Twilio status callback received', $request->all());
+
+        $leadId = $request->query('lead_id');
+        $callStatus = $request->input('CallStatus');
+
+        if ($leadId) {
+            $lead = CallLead::find($leadId);
+
+            if ($lead) {
+                $lead->update([
+                    'status' => $callStatus,
+                    'call_date' => now(),
+                ]);
+            }
+        }
+
+        return response('OK', 200);
     }
 }

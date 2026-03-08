@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Models\Subscription;
 use DB;
 use Illuminate\Support\Facades\Log;
-
+use App\Models\CallLead;
 use Stripe\Stripe;
 use Stripe\Product;
 use Stripe\Checkout\Session;
@@ -67,7 +67,13 @@ class UserController extends Controller
 
     public function calllogs()
     {
-        return view('user.pages.calllogs');
+        $logs = CallLead::with('campaign')
+        ->orderByDesc('call_date')
+        ->limit(200)
+        ->get();
+
+        return view('user.pages.calllogs', compact('logs'));
+    
     }
 
     public function use()
