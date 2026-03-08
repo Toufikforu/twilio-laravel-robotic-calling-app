@@ -20,3 +20,13 @@ or
 1. Pagination
 2. Plus +1 add
 3. Duplicate number
+
+
+
+=============================== commands
+
+php artisan tinker
+DB::table('call_leads')->delete();
+
+php artisan optimize:clear
+php artisan queue:work --queue=calls,default -v

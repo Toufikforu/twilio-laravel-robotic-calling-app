@@ -128,4 +128,4 @@ Route::middleware('auth','is_Admin')->group(function () {
 
 });
 Route::match(['get','post'], '/twilio/voice', [TwilioController::class, 'voice']);
-Route::post('/twilio/status-callback', [TwilioController::class, 'statusCallback']);
+
